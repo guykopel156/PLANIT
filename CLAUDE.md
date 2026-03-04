@@ -9,7 +9,7 @@ PLANIT is an all-in-one trip planning platform. Web + iOS + Android.
 ## Project Structure
 ```
 PLANIT/
-├── client/              # React 18 + TypeScript frontend
+├── frontend/            # React 18 + TypeScript frontend
 │   ├── src/
 │   │   ├── components/  # Reusable UI components
 │   │   ├── pages/       # Route-level page components
@@ -20,7 +20,7 @@ PLANIT/
 │   │   ├── utils/       # Helper functions
 │   │   └── assets/      # Static assets (images, icons)
 │   └── ...
-├── server/              # Node.js + Express + TypeScript backend
+├── backend/             # Node.js + Express + TypeScript backend
 │   ├── src/
 │   │   ├── routes/      # Express route definitions
 │   │   ├── controllers/ # Request handlers
@@ -107,7 +107,7 @@ PLANIT/
 
 ### Claude AI Integration
 - All Claude API calls go through the backend — frontend NEVER calls Anthropic directly
-- System prompts stored in `server/src/services/ai/prompts/`
+- System prompts stored in `backend/src/services/ai/prompts/`
 - Streaming enabled for chat responses
 - Rate limit: 10 requests/minute per user
 - Token budget tracked per session
