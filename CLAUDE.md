@@ -50,12 +50,13 @@ PLANIT/
 ### Naming Conventions
 - **Files**: camelCase for utilities (`authService.ts`), PascalCase for components (`TripCard.tsx`)
 - **Variables/functions**: camelCase (`getUserTrips`)
-- **Interfaces/Types**: PascalCase with prefix (`IUser`, `TripPreferences`)
+- **Interfaces/Types**: PascalCase (`User`, `TripPreferences`)
 - **Constants**: UPPER_SNAKE_CASE (`MAX_COLLABORATORS`)
 - **Components**: PascalCase (`MapView`, `StopCard`)
 - **CSS classes**: TailwindCSS utility classes only — no custom CSS unless absolutely necessary
 
 ### Frontend (React + TypeScript)
+- **UI components only** — all interactive/visual elements (`<button>`, `<input>`, `<a>` styled as button, badges, alerts, cards, toggles, avatars, etc.) must use components from `src/UI/`. Never use raw HTML elements for these outside `src/UI/`. If a UI component doesn't exist yet, create one in `src/UI/` with the `UI` prefix, add it to `UI/index.ts`, then use it.
 - Functional components only — no class components
 - Use React Query for all API calls and server state
 - Use React Context for auth state only — avoid overusing context
