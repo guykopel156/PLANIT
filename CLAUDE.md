@@ -11,14 +11,27 @@ PLANIT is an all-in-one trip planning platform. Web + iOS + Android.
 PLANIT/
 ├── frontend/            # React 18 + TypeScript frontend
 │   ├── src/
-│   │   ├── components/  # Reusable UI components
-│   │   ├── pages/       # Route-level page components
-│   │   ├── hooks/       # Custom React hooks
-│   │   ├── context/     # React context providers
-│   │   ├── services/    # API call functions
-│   │   ├── types/       # TypeScript interfaces & types
-│   │   ├── utils/       # Helper functions
-│   │   └── assets/      # Static assets (images, icons)
+│   │   ├── App/             # App shell (App.tsx, router setup)
+│   │   ├── LandingPage/     # Landing page feature module
+│   │   │   ├── Home.tsx     # Landing page entry component
+│   │   │   ├── components/  # Landing page sections & visuals
+│   │   │   │   ├── hero3d/  # 3D scene (Airplane, Cloud, Particles, FlightPath)
+│   │   │   │   ├── HeroSection.tsx, AIChatSection.tsx, MapPreviewSection.tsx
+│   │   │   │   ├── TicketsSection.tsx, StatsSection.tsx, CtaSection.tsx
+│   │   │   │   ├── CursorSpotlight.tsx, FloatingShapes.tsx
+│   │   │   │   └── FlightTicket.tsx, MouseGlowCard.tsx, Reveal.tsx
+│   │   │   └── hooks/      # Landing-page-specific hooks
+│   │   │       ├── useScrollProgress.ts, useScrollReveal.ts
+│   │   │       ├── useMagnetic.ts, useMouseParallax.ts
+│   │   ├── UI/              # Shared UI components (UIPrimaryButton, UINavbar, etc.)
+│   │   ├── context/         # React context providers (ThemeContext)
+│   │   ├── hooks/           # Shared/global hooks
+│   │   ├── services/        # API call functions
+│   │   ├── types/           # TypeScript interfaces & types
+│   │   ├── utils/           # Helper functions
+│   │   ├── assets/          # Static assets (images, icons)
+│   │   ├── main.tsx         # Entry point
+│   │   └── index.css        # Global styles & keyframes
 │   └── ...
 ├── backend/             # Node.js + Express + TypeScript backend
 │   ├── src/
@@ -160,6 +173,8 @@ PLANIT/
 - No snapshot tests unless explicitly justified
 
 ### Backend Testing Rules
+
+
 - Unit tests for services and utilities — mock external dependencies (DB, APIs)
 - Integration tests for API endpoints using Supertest — test full request/response cycle
 - Use a separate test database or in-memory MongoDB (`mongodb-memory-server`)
