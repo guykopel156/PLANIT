@@ -7,3 +7,5 @@ export { default as UIAlert } from './UIAlert';
 export { default as UIToggle } from './UIToggle';
 export { default as UIAvatar } from './UIAvatar';
 export { default as UIIconButton } from './UIIconButton';
+export { default as UINavbar } from './UINavbar';
+export { default as UINavLink } from './UINavLink';
