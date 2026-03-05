@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { UIPrimaryButton, UISecondaryButton } from '../../UI';
 import Reveal from './Reveal';
 import useMagnetic from '../hooks/useMagnetic';
@@ -13,6 +12,18 @@ const HEADING_PARALLAX_PX = 40;
 const SUBHEADING_PARALLAX_PX = 20;
 const SUBTITLE_PARALLAX_PX = 10;
 const SCROLL_CENTER = 0.5;
+const GRAD1_X = 50;
+const GRAD1_Y = 40;
+const GRAD1_PARALLAX_X = 25;
+const GRAD1_PARALLAX_Y = 20;
+const GRAD2_X = 30;
+const GRAD2_Y = 70;
+const GRAD2_PARALLAX_X = 15;
+const GRAD2_PARALLAX_Y = 12;
+const GRAD3_X = 70;
+const GRAD3_Y = 25;
+const GRAD3_PARALLAX_X = 10;
+const GRAD3_PARALLAX_Y = 10;
 
 function CtaGradientMesh({ mouse }: { mouse: { x: number; y: number } }): React.ReactElement {
   return (
@@ -21,9 +32,9 @@ function CtaGradientMesh({ mouse }: { mouse: { x: number; y: number } }): React.
         className="absolute inset-0 transition-all duration-700"
         style={{
           background: `
-            radial-gradient(ellipse at ${50 + mouse.x * 25}% ${40 + mouse.y * 20}%, rgba(6,182,212,0.12) 0%, transparent 50%),
-            radial-gradient(ellipse at ${30 - mouse.x * 15}% ${70 - mouse.y * 12}%, rgba(59,130,246,0.1) 0%, transparent 45%),
-            radial-gradient(ellipse at ${70 + mouse.x * 10}% ${25 + mouse.y * 10}%, rgba(139,92,246,0.08) 0%, transparent 40%)
+            radial-gradient(ellipse at ${GRAD1_X + mouse.x * GRAD1_PARALLAX_X}% ${GRAD1_Y + mouse.y * GRAD1_PARALLAX_Y}%, rgba(6,182,212,0.12) 0%, transparent 50%),
+            radial-gradient(ellipse at ${GRAD2_X - mouse.x * GRAD2_PARALLAX_X}% ${GRAD2_Y - mouse.y * GRAD2_PARALLAX_Y}%, rgba(59,130,246,0.1) 0%, transparent 45%),
+            radial-gradient(ellipse at ${GRAD3_X + mouse.x * GRAD3_PARALLAX_X}% ${GRAD3_Y + mouse.y * GRAD3_PARALLAX_Y}%, rgba(139,92,246,0.08) 0%, transparent 40%)
           `,
         }}
       />
@@ -44,11 +55,9 @@ function CtaButtons(): React.ReactElement {
         className="relative inline-block"
       >
         <div className="absolute -inset-3 rounded-2xl bg-gradient-to-r from-blue-500/20 to-cyan-500/20 dark:from-cyan-500/15 dark:to-blue-500/15" style={{ animation: 'ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite' }} />
-        <Link to="/trips">
-          <UIPrimaryButton className="relative rounded-2xl px-12 py-5 text-lg font-bold shadow-xl shadow-blue-500/25 transition-all hover:shadow-2xl hover:shadow-blue-500/40 dark:shadow-cyan-500/15">
-            Start Planning Free
-          </UIPrimaryButton>
-        </Link>
+        <UIPrimaryButton to="/trips" className="relative rounded-2xl px-12 py-5 text-lg font-bold shadow-xl shadow-blue-500/25 transition-all hover:shadow-2xl hover:shadow-blue-500/40 dark:shadow-cyan-500/15">
+          Start Planning Free
+        </UIPrimaryButton>
       </div>
       <div
         ref={magneticSecondary.ref}
@@ -56,11 +65,9 @@ function CtaButtons(): React.ReactElement {
         onMouseLeave={magneticSecondary.handleMouseLeave}
         className="inline-block"
       >
-        <Link to="/explore">
-          <UISecondaryButton className="rounded-2xl px-12 py-5 text-lg font-bold dark:border-white/15 dark:text-white dark:hover:bg-white/10">
-            Watch Demo
-          </UISecondaryButton>
-        </Link>
+        <UISecondaryButton to="/explore" className="rounded-2xl px-12 py-5 text-lg font-bold dark:border-white/15 dark:text-white dark:hover:bg-white/10">
+          Watch Demo
+        </UISecondaryButton>
       </div>
     </div>
   );

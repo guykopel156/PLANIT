@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Link } from 'react-router-dom';
+
 import { UIPrimaryButton, UISecondaryButton } from '../../UI';
 import FloatingShapes from './FloatingShapes';
 import useMagnetic from '../hooks/useMagnetic';
@@ -11,9 +11,14 @@ interface IHeroSectionProps {
 }
 
 const SCROLL_MIDPOINT = 0.5;
+const SCROLL_FADE_MULTIPLIER = 2;
 const SCALE_REDUCTION = 0.15;
 const SCROLL_INDICATOR_FADE_SPEED = 5;
 const BLUR_INTENSITY = 8;
+const HEADING_PARALLAX_X = 8;
+const HEADING_PARALLAX_Y = 5;
+const SUBTEXT_PARALLAX_X = -5;
+const SUBTEXT_PARALLAX_Y = -3;
 
 const BADGES = [
   { text: 'AI-Powered', x: 'left-[6%]', y: 'top-[22%]', parallaxX: -25, parallaxY: -20 },
@@ -24,7 +29,13 @@ const BADGES = [
 
 const BOUNCE_IN_TIMING = 'cubic-bezier(0.34, 1.56, 0.64, 1)';
 
-function HeroBadges({ mouse, heroProgress, fade }: { mouse: { x: number; y: number }; heroProgress: number; fade: number }): React.ReactElement {
+interface IHeroBadgesProps {
+  mouse: { x: number; y: number };
+  heroProgress: number;
+  fade: number;
+}
+
+function HeroBadges({ mouse, heroProgress, fade }: IHeroBadgesProps): React.ReactElement {
   return (
     <div className="pointer-events-none absolute inset-0 z-[5] hidden select-none lg:block" style={{ opacity: fade }}>
       {BADGES.map((badge) => (
@@ -44,20 +55,22 @@ function HeroBadges({ mouse, heroProgress, fade }: { mouse: { x: number; y: numb
   );
 }
 
-function HeroContent({ mouse, fade, magneticRef, handleMouseMove, handleMouseLeave }: {
+interface IHeroContentProps {
   mouse: { x: number; y: number };
   fade: number;
   magneticRef: React.RefObject<HTMLDivElement | null>;
   handleMouseMove: (event: React.MouseEvent) => void;
   handleMouseLeave: () => void;
-}): React.ReactElement {
+}
+
+function HeroContent({ mouse, fade, magneticRef, handleMouseMove, handleMouseLeave }: IHeroContentProps): React.ReactElement {
   return (
     <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8" style={{ opacity: fade }}>
       <div className="max-w-4xl">
         <h1
           className="mb-6 text-7xl leading-[1.0] font-black tracking-tight text-gray-900 sm:text-8xl lg:text-9xl dark:text-white"
           style={{
-            transform: `translate(${mouse.x * 8}px, ${mouse.y * 5}px)`,
+            transform: `translate(${mouse.x * HEADING_PARALLAX_X}px, ${mouse.y * HEADING_PARALLAX_Y}px)`,
             animation: `bounce-in 0.8s ${BOUNCE_IN_TIMING} forwards`,
           }}
         >
@@ -71,7 +84,7 @@ function HeroContent({ mouse, fade, magneticRef, handleMouseMove, handleMouseLea
         <p
           className="mb-10 max-w-xl text-lg leading-relaxed text-gray-500 sm:text-xl dark:text-gray-400"
           style={{
-            transform: `translate(${mouse.x * -5}px, ${mouse.y * -3}px)`,
+            transform: `translate(${mouse.x * SUBTEXT_PARALLAX_X}px, ${mouse.y * SUBTEXT_PARALLAX_Y}px)`,
             animation: `bounce-in 0.8s ${BOUNCE_IN_TIMING} 0.15s both`,
           }}
         >
@@ -85,16 +98,12 @@ function HeroContent({ mouse, fade, magneticRef, handleMouseMove, handleMouseLea
           onMouseLeave={handleMouseLeave}
           style={{ animation: `bounce-in 0.8s ${BOUNCE_IN_TIMING} 0.3s both` }}
         >
-          <Link to="/trips">
-            <UIPrimaryButton className="rounded-2xl px-10 py-5 text-lg font-bold shadow-xl shadow-blue-500/25 transition-all hover:shadow-2xl hover:shadow-blue-500/35 dark:shadow-blue-500/15">
-              Start Planning Free
-            </UIPrimaryButton>
-          </Link>
-          <Link to="/explore">
-            <UISecondaryButton className="rounded-2xl px-10 py-5 text-lg font-bold dark:border-white/15 dark:text-white dark:hover:bg-white/10">
-              Watch Demo
-            </UISecondaryButton>
-          </Link>
+          <UIPrimaryButton to="/trips" className="rounded-2xl px-10 py-5 text-lg font-bold shadow-xl shadow-blue-500/25 transition-all hover:shadow-2xl hover:shadow-blue-500/35 dark:shadow-blue-500/15">
+            Start Planning Free
+          </UIPrimaryButton>
+          <UISecondaryButton to="/explore" className="rounded-2xl px-10 py-5 text-lg font-bold dark:border-white/15 dark:text-white dark:hover:bg-white/10">
+            Watch Demo
+          </UISecondaryButton>
         </div>
       </div>
     </div>
@@ -104,8 +113,8 @@ function HeroContent({ mouse, fade, magneticRef, handleMouseMove, handleMouseLea
 function HeroSection({ heroRef, heroProgress, mouse }: IHeroSectionProps): React.ReactElement {
   const magneticCta = useMagnetic<HTMLDivElement>(0.15);
 
-  const scrollAmount = Math.max(0, heroProgress - SCROLL_MIDPOINT) * 2;
-  const fade = Math.max(0, 1 - scrollAmount * 2);
+  const scrollAmount = Math.max(0, heroProgress - SCROLL_MIDPOINT) * SCROLL_FADE_MULTIPLIER;
+  const fade = Math.max(0, 1 - scrollAmount * SCROLL_FADE_MULTIPLIER);
   const scale = 1 - scrollAmount * SCALE_REDUCTION;
 
   return (

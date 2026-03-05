@@ -60,7 +60,7 @@ function TicketsSection(): React.ReactElement {
           <div className="relative mx-auto flex max-w-lg items-center justify-center" style={{ minHeight: `${CARD_MIN_HEIGHT_PX}px` }}>
             {TICKETS.map((ticket, index) => (
               <div key={ticket.fromCode + ticket.toCode} className="absolute w-full max-w-md" style={getCardTransform(index, fanProgress)}>
-                <MouseGlowCard tiltStrength={6} scaleOnHover glowColor="rgba(6,182,212,0.12)">
+                <MouseGlowCard tiltStrength={6} shouldScaleOnHover glowColor="rgba(6,182,212,0.12)">
                   <FlightTicket from={ticket.from} fromCode={ticket.fromCode} to={ticket.to} toCode={ticket.toCode} date={ticket.date} />
                 </MouseGlowCard>
               </div>

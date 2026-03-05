@@ -1,6 +1,7 @@
 import useMouseParallax from './hooks/useMouseParallax';
 import useScrollProgress from './hooks/useScrollProgress';
 import { useTheme } from '../context/ThemeContext';
+import { UIFooterLink } from '../UI';
 import CursorSpotlight from './components/CursorSpotlight';
 import HeroSection from './components/HeroSection';
 import AIChatSection from './components/AIChatSection';
@@ -12,7 +13,23 @@ import SectionDivider from './components/SectionDivider';
 
 const FOOTER_LINKS = ['Privacy', 'Terms', 'Contact'];
 
-function AmbientBlobs({ mouse }: { mouse: { x: number; y: number } }): React.ReactElement {
+const BLOB_1_LEFT = 20;
+const BLOB_1_TOP = 15;
+const BLOB_1_PARALLAX_X = 10;
+const BLOB_1_PARALLAX_Y = 8;
+const BLOB_2_RIGHT = 15;
+const BLOB_2_BOTTOM = 20;
+const BLOB_2_PARALLAX_X = 8;
+const BLOB_2_PARALLAX_Y = 5;
+const BLOB_3_LEFT = 60;
+const BLOB_3_TOP = 50;
+const BLOB_3_PARALLAX = 5;
+
+interface IAmbientBlobsProps {
+  mouse: { x: number; y: number };
+}
+
+function AmbientBlobs({ mouse }: IAmbientBlobsProps): React.ReactElement {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
@@ -24,8 +41,8 @@ function AmbientBlobs({ mouse }: { mouse: { x: number; y: number } }): React.Rea
           background: isDark
             ? 'radial-gradient(circle, rgba(6,182,212,0.3), transparent 70%)'
             : 'radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%)',
-          left: `${20 + mouse.x * 10}%`,
-          top: `${15 + mouse.y * 8}%`,
+          left: `${BLOB_1_LEFT + mouse.x * BLOB_1_PARALLAX_X}%`,
+          top: `${BLOB_1_TOP + mouse.y * BLOB_1_PARALLAX_Y}%`,
         }}
       />
       <div
@@ -34,8 +51,8 @@ function AmbientBlobs({ mouse }: { mouse: { x: number; y: number } }): React.Rea
           background: isDark
             ? 'radial-gradient(circle, rgba(59,130,246,0.3), transparent 70%)'
             : 'radial-gradient(circle, rgba(139,92,246,0.12), transparent 70%)',
-          right: `${15 - mouse.x * 8}%`,
-          bottom: `${20 - mouse.y * 5}%`,
+          right: `${BLOB_2_RIGHT - mouse.x * BLOB_2_PARALLAX_X}%`,
+          bottom: `${BLOB_2_BOTTOM - mouse.y * BLOB_2_PARALLAX_Y}%`,
         }}
       />
       <div
@@ -44,8 +61,8 @@ function AmbientBlobs({ mouse }: { mouse: { x: number; y: number } }): React.Rea
           background: isDark
             ? 'radial-gradient(circle, rgba(6,182,212,0.25), transparent 70%)'
             : 'radial-gradient(circle, rgba(6,182,212,0.1), transparent 70%)',
-          left: `${60 + mouse.x * 5}%`,
-          top: `${50 + mouse.y * 5}%`,
+          left: `${BLOB_3_LEFT + mouse.x * BLOB_3_PARALLAX}%`,
+          top: `${BLOB_3_TOP + mouse.y * BLOB_3_PARALLAX}%`,
         }}
       />
     </div>
@@ -61,7 +78,7 @@ function Footer(): React.ReactElement {
         </p>
         <div className="flex gap-6 text-sm text-gray-400 dark:text-gray-600">
           {FOOTER_LINKS.map((linkText) => (
-            <a key={linkText} href="#" className="transition-colors hover:text-gray-600 dark:hover:text-gray-400">{linkText}</a>
+            <UIFooterLink key={linkText} href="#">{linkText}</UIFooterLink>
           ))}
         </div>
       </div>

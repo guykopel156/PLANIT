@@ -2,8 +2,9 @@ import { useRef, useCallback } from 'react';
 
 const MOVE_TRANSITION = 'transform 0.15s ease-out';
 const LEAVE_TRANSITION = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+const DEFAULT_STRENGTH = 0.3;
 
-function useMagnetic<T extends HTMLElement = HTMLElement>(strength = 0.3): {
+function useMagnetic<T extends HTMLElement = HTMLElement>(strength = DEFAULT_STRENGTH): {
   ref: React.RefObject<T | null>;
   handleMouseMove: (event: React.MouseEvent) => void;
   handleMouseLeave: () => void;

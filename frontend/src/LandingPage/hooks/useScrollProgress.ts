@@ -1,5 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
+const INTERSECTION_THRESHOLD = 0;
+
+function computeProgress(element: HTMLElement): number {
+  const rect = element.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const total = viewportHeight + rect.height;
+  const current = viewportHeight - rect.top;
+  return Math.min(1, Math.max(0, current / total));
+}
+
 function useScrollProgress<T extends HTMLElement = HTMLDivElement>(): [
   React.RefObject<T | null>,
   number,
@@ -14,12 +24,7 @@ function useScrollProgress<T extends HTMLElement = HTMLDivElement>(): [
     let isTicking = false;
 
     const update = (): void => {
-      const rect = element.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const total = viewportHeight + rect.height;
-      const current = viewportHeight - rect.top;
-      const value = Math.min(1, Math.max(0, current / total));
-      setProgress(value);
+      setProgress(computeProgress(element));
       isTicking = false;
     };
 
@@ -39,7 +44,7 @@ function useScrollProgress<T extends HTMLElement = HTMLDivElement>(): [
           window.removeEventListener('scroll', handleScroll);
         }
       },
-      { threshold: 0 },
+      { threshold: INTERSECTION_THRESHOLD },
     );
 
     observer.observe(element);

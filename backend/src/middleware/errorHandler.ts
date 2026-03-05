@@ -1,9 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 
+import logger from '../utils/logger';
+
 interface AppError extends Error {
   statusCode?: number;
   code?: string;
 }
+
+const DEFAULT_STATUS_CODE = 500;
+const DEFAULT_ERROR_CODE = 'INTERNAL_ERROR';
+const DEFAULT_ERROR_MESSAGE = 'Internal server error';
 
 const errorHandler = (
   err: AppError,
@@ -11,16 +17,14 @@ const errorHandler = (
   res: Response,
   _next: NextFunction
 ): void => {
-  const statusCode = err.statusCode || 500;
-  const code = err.code || 'INTERNAL_ERROR';
+  const statusCode = err.statusCode || DEFAULT_STATUS_CODE;
+  const code = err.code || DEFAULT_ERROR_CODE;
+  const message = err.message || DEFAULT_ERROR_MESSAGE;
 
-  console.error(`[Error] ${code}: ${err.message}`);
+  logger.error(`${code}: ${message}`, { statusCode, code });
 
   res.status(statusCode).json({
-    error: {
-      code,
-      message: err.message || 'Internal server error',
-    },
+    error: { code, message, details: [] },
   });
 };
 

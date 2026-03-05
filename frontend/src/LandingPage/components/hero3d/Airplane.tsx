@@ -13,6 +13,18 @@ const BANK_STRENGTH = 0.08;
 const PROPELLER_SPEED = 0.3;
 const AIRPLANE_SCALE = 2.5;
 const INITIAL_YAW = -0.3;
+const WINDSHIELD_OPACITY = 0.7;
+const EMISSIVE_BOOST = 1.5;
+const PROPELLER_OPACITY = 0.8;
+const STRIPE_OPACITY = 0.6;
+const EMISSIVE_DARK = 0.6;
+const EMISSIVE_LIGHT = 0.1;
+const ACCENT_DARK = '#06b6d4';
+const ACCENT_LIGHT = '#3b82f6';
+const BODY_DARK = '#e2e8f0';
+const BODY_LIGHT = '#ffffff';
+const WINDSHIELD_DARK = '#67e8f9';
+const WINDSHIELD_LIGHT = '#93c5fd';
 
 function AirplaneFuselage({ bodyColor }: { bodyColor: string }): React.ReactElement {
   return (
@@ -54,11 +66,11 @@ function AirplaneAccents({ accentColor, emissiveIntensity, isDark }: { accentCol
       </mesh>
       <mesh position={[0.55, 0.12, 0]} rotation={[0, 0, 0.2]}>
         <boxGeometry args={[0.25, 0.1, 0.2]} />
-        <meshStandardMaterial color={isDark ? '#67e8f9' : '#93c5fd'} roughness={0.1} metalness={0.5} transparent opacity={0.7} />
+        <meshStandardMaterial color={isDark ? WINDSHIELD_DARK : WINDSHIELD_LIGHT} roughness={0.1} metalness={0.5} transparent opacity={WINDSHIELD_OPACITY} />
       </mesh>
       <mesh position={[0, 0.05, 0]} rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[0.23, 0.23, 1.2, 12, 1, true, 1.2, 0.8]} />
-        <meshStandardMaterial color={accentColor} emissive={accentColor} emissiveIntensity={emissiveIntensity} transparent opacity={0.6} />
+        <meshStandardMaterial color={accentColor} emissive={accentColor} emissiveIntensity={emissiveIntensity} transparent opacity={STRIPE_OPACITY} />
       </mesh>
     </>
   );
@@ -71,9 +83,9 @@ function Airplane(): React.ReactElement {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const accentColor = isDark ? '#06b6d4' : '#3b82f6';
-  const bodyColor = isDark ? '#e2e8f0' : '#ffffff';
-  const emissiveIntensity = isDark ? 0.6 : 0.1;
+  const accentColor = isDark ? ACCENT_DARK : ACCENT_LIGHT;
+  const bodyColor = isDark ? BODY_DARK : BODY_LIGHT;
+  const emissiveIntensity = isDark ? EMISSIVE_DARK : EMISSIVE_LIGHT;
 
   useFrame((state) => {
     if (!groupRef.current) return;
@@ -98,7 +110,7 @@ function Airplane(): React.ReactElement {
       <AirplaneAccents accentColor={accentColor} emissiveIntensity={emissiveIntensity} isDark={isDark} />
       <mesh ref={propellerRef} position={[1.0, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
         <boxGeometry args={[0.6, 0.04, 0.03]} />
-        <meshStandardMaterial color={accentColor} emissive={accentColor} emissiveIntensity={emissiveIntensity * 1.5} transparent opacity={0.8} />
+        <meshStandardMaterial color={accentColor} emissive={accentColor} emissiveIntensity={emissiveIntensity * EMISSIVE_BOOST} transparent opacity={PROPELLER_OPACITY} />
       </mesh>
     </group>
   );

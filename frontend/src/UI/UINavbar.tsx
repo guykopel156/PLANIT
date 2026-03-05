@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import { useTheme } from '../context/ThemeContext';
 import UINavLink from './UINavLink';
 import UIPrimaryButton from './UIPrimaryButton';
@@ -41,26 +41,29 @@ function ThemeToggle(): React.ReactElement {
   );
 }
 
-function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }): React.ReactElement | null {
+interface IMobileMenuProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+function MobileMenu({ isOpen, onClose }: IMobileMenuProps): React.ReactElement | null {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-x-0 top-20 z-40 mx-4 rounded-2xl border border-white/10 bg-gray-950/95 p-4 shadow-2xl backdrop-blur-xl md:hidden">
       <div className="flex flex-col gap-3">
         {NAV_LINKS.map((link) => (
-          <Link
+          <UINavLink
             key={link.to}
             to={link.to}
             onClick={onClose}
             className="rounded-xl px-4 py-3 text-base font-medium text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
           >
             {link.label}
-          </Link>
+          </UINavLink>
         ))}
         <hr className="border-white/10" />
-        <Link to="/trips" onClick={onClose}>
-          <UIPrimaryButton className="w-full rounded-xl px-4 py-3">Sign Up</UIPrimaryButton>
-        </Link>
+        <UIPrimaryButton to="/trips" className="w-full rounded-xl px-4 py-3" onClick={onClose}>Sign Up</UIPrimaryButton>
       </div>
     </div>
   );
@@ -77,12 +80,12 @@ function UINavbar(): React.ReactElement {
     <>
       <nav className="fixed top-4 right-0 left-0 z-50 flex justify-center px-4">
         <div className="flex items-center gap-1 rounded-full border border-white/10 bg-gray-950/90 px-2 py-1.5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:gap-2 sm:px-3">
-          <Link
+          <UINavLink
             to="/"
             className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-950 transition-transform hover:scale-105"
           >
             <AirplaneIcon />
-          </Link>
+          </UINavLink>
 
           <div className="hidden items-center gap-1 px-2 md:flex">
             {NAV_LINKS.map((link) => (
@@ -98,11 +101,9 @@ function UINavbar(): React.ReactElement {
 
           <div className="hidden items-center gap-1 md:flex">
             <ThemeToggle />
-            <Link to="/trips">
-              <UIPrimaryButton className="rounded-full px-5 py-1.5 text-sm font-semibold">
-                Sign Up
-              </UIPrimaryButton>
-            </Link>
+            <UIPrimaryButton to="/trips" className="rounded-full px-5 py-1.5 text-sm font-semibold">
+              Sign Up
+            </UIPrimaryButton>
           </div>
 
           <div className="flex items-center gap-1 md:hidden">

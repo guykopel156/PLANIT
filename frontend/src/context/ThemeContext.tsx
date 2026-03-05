@@ -1,45 +1,60 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useSyncExternalStore } from 'react';
 
-type Theme = "light" | "dark";
+type Theme = 'light' | 'dark';
 
-interface IThemeContext {
+interface IThemeStore {
   theme: Theme;
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<IThemeContext | undefined>(undefined);
+const STORAGE_KEY = 'theme';
 
-export function ThemeProvider({ children }: { children: ReactNode }): React.ReactElement {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const stored = localStorage.getItem("theme");
-    return stored === "dark" ? "dark" : "light";
-  });
+let currentTheme: Theme = localStorage.getItem(STORAGE_KEY) === 'dark' ? 'dark' : 'light';
+const listeners = new Set<() => void>();
 
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = (): void => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
-
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+function applyTheme(theme: Theme): void {
+  const root = document.documentElement;
+  if (theme === 'dark') {
+    root.classList.add('dark');
+  } else {
+    root.classList.remove('dark');
+  }
+  localStorage.setItem(STORAGE_KEY, theme);
 }
 
-export function useTheme(): IThemeContext {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+applyTheme(currentTheme);
+
+function subscribe(listener: () => void): () => void {
+  listeners.add(listener);
+  return (): void => {
+    listeners.delete(listener);
+  };
+}
+
+function getSnapshot(): Theme {
+  return currentTheme;
+}
+
+function emitChange(): void {
+  for (const listener of listeners) {
+    listener();
   }
-  return context;
+}
+
+export function resetThemeForTest(): void {
+  currentTheme = 'light';
+  applyTheme(currentTheme);
+  emitChange();
+}
+
+export function useTheme(): IThemeStore {
+  const theme = useSyncExternalStore(subscribe, getSnapshot);
+
+  const toggleTheme = useCallback((): void => {
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(currentTheme);
+    emitChange();
+  }, []);
+
+  return { theme, toggleTheme };
 }

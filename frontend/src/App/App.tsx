@@ -1,22 +1,26 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from '../context/ThemeContext';
-import { UINavbar } from '../UI';
-import Home from '../LandingPage/Home';
+
+import { UINavbar, UIErrorBoundary } from '../UI';
+
+const Home = lazy(() => import('../LandingPage/Home'));
 
 const queryClient = new QueryClient();
 
 function App(): React.ReactElement {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <UIErrorBoundary>
           <UINavbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
+          <Suspense fallback={<div className="flex min-h-screen items-center justify-center" />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </Suspense>
+        </UIErrorBoundary>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }

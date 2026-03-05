@@ -1,5 +1,8 @@
 import { useTheme } from '../../context/ThemeContext';
 
+const DARK_BASE_COLOR = '#030712';
+const LIGHT_BASE_COLOR = '#ffffff';
+
 interface ISectionDividerProps {
   darkMidColor: string;
   lightMidColor: string;
@@ -23,8 +26,8 @@ function SectionDivider({
       className="relative h-40 sm:h-56"
       style={{
         background: isDark
-          ? `linear-gradient(to bottom, #030712, ${darkMidColor}, #030712)`
-          : `linear-gradient(to bottom, #ffffff, ${lightMidColor}, #ffffff)`,
+          ? `linear-gradient(to bottom, ${DARK_BASE_COLOR}, ${darkMidColor}, ${DARK_BASE_COLOR})`
+          : `linear-gradient(to bottom, ${LIGHT_BASE_COLOR}, ${lightMidColor}, ${LIGHT_BASE_COLOR})`,
       }}
     >
       <div

@@ -1,9 +1,10 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+
+import { getHealth } from '../controllers/healthController';
+import validate from '../middleware/validate';
 
 const router = Router();
 
-router.get('/health', (_req: Request, res: Response): void => {
-  res.json({ status: 'ok' });
-});
+router.get('/health', validate([]), getHealth);
 
 export default router;

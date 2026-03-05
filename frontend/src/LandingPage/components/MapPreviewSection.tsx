@@ -7,6 +7,7 @@ const DESTINATIONS = [
   { name: 'Sydney', x: 82, y: 72, delay: 600 },
 ];
 
+const REVEAL_THRESHOLD = 0.15;
 const ROUTE_POINTS = 'M 25,35 C 35,20 42,25 48,30 C 55,28 70,25 78,38 C 80,50 82,60 82,72';
 const ROUTE_DASH_LENGTH = 200;
 const PIN_APPEAR_DELAY_MS = 800;
@@ -88,7 +89,7 @@ function LocationPin({ destination, isVisible }: { destination: typeof DESTINATI
 }
 
 function MapPreviewSection(): React.ReactElement {
-  const [sectionRef, isVisible] = useScrollReveal<HTMLElement>({ threshold: 0.15 });
+  const [sectionRef, isVisible] = useScrollReveal<HTMLElement>({ threshold: REVEAL_THRESHOLD });
 
   return (
     <section ref={sectionRef} className="relative flex min-h-screen items-center overflow-hidden py-24 sm:py-32">

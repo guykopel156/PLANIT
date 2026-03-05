@@ -13,6 +13,18 @@ interface ICloudProps {
 const WRAP_X = 12;
 const MOUSE_PARALLAX_STRENGTH = 0.3;
 const MOUSE_LERP = 0.03;
+const HALF = 0.5;
+const CLOUD_OPACITY_DARK = 0.15;
+const CLOUD_OPACITY_LIGHT = 0.6;
+const CLOUD_COLOR_DARK = '#94a3b8';
+const CLOUD_COLOR_LIGHT = '#f1f5f9';
+const MIN_SPHERE_COUNT = 4;
+const SPHERE_COUNT_RANGE = 3;
+const OFFSET_SPREAD_X = 0.8;
+const OFFSET_SPREAD_Y = 0.3;
+const OFFSET_SPREAD_Z = 0.4;
+const MIN_RADIUS = 0.2;
+const RADIUS_RANGE = 0.25;
 
 function Cloud({ position, scale = 1, speed = 0.3 }: ICloudProps): React.ReactElement {
   const groupRef = useRef<Group>(null);
@@ -21,14 +33,14 @@ function Cloud({ position, scale = 1, speed = 0.3 }: ICloudProps): React.ReactEl
   const isDark = theme === 'dark';
 
   const spheres = useMemo(() => {
-    const count = 4 + Math.floor(Math.random() * 3);
-    return Array.from({ length: count }, () => ({
+    const count = MIN_SPHERE_COUNT + Math.floor(Math.random() * SPHERE_COUNT_RANGE);
+    return Array.from({ length: count }, (): { offset: [number, number, number]; radius: number } => ({
       offset: [
-        (Math.random() - 0.5) * 0.8,
-        (Math.random() - 0.5) * 0.3,
-        (Math.random() - 0.5) * 0.4,
-      ] as [number, number, number],
-      radius: 0.2 + Math.random() * 0.25,
+        (Math.random() - HALF) * OFFSET_SPREAD_X,
+        (Math.random() - HALF) * OFFSET_SPREAD_Y,
+        (Math.random() - HALF) * OFFSET_SPREAD_Z,
+      ],
+      radius: MIN_RADIUS + Math.random() * RADIUS_RANGE,
     }));
   }, []);
 
@@ -45,8 +57,8 @@ function Cloud({ position, scale = 1, speed = 0.3 }: ICloudProps): React.ReactEl
     groupRef.current.position.y += (targetY - groupRef.current.position.y) * MOUSE_LERP;
   });
 
-  const opacity = isDark ? 0.15 : 0.6;
-  const color = isDark ? '#94a3b8' : '#f1f5f9';
+  const opacity = isDark ? CLOUD_OPACITY_DARK : CLOUD_OPACITY_LIGHT;
+  const color = isDark ? CLOUD_COLOR_DARK : CLOUD_COLOR_LIGHT;
 
   return (
     <group ref={groupRef} position={position} scale={scale}>

@@ -1,3 +1,4 @@
+import { UIBadge } from '../../UI';
 import MouseGlowCard from './MouseGlowCard';
 
 interface ITicketProps {
@@ -19,7 +20,7 @@ function FlightTicket({
     <MouseGlowCard
       className="rounded-2xl border border-gray-200/80 bg-white/80 shadow-sm backdrop-blur-sm dark:border-white/[0.08] dark:bg-white/[0.04]"
       tiltStrength={5}
-      scaleOnHover
+      shouldScaleOnHover
       glowColor="rgba(59,130,246,0.12)"
     >
       <div
@@ -64,9 +65,7 @@ function FlightTicket({
           <p className="text-xs text-gray-400 sm:text-sm dark:text-gray-500">
             {date}
           </p>
-          <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">
-            Direct
-          </span>
+          <UIBadge>Direct</UIBadge>
         </div>
 
         <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-black/[0.03] to-transparent transition-transform duration-700 group-hover:translate-x-full dark:via-white/[0.03]" />

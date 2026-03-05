@@ -6,8 +6,9 @@ interface IMousePosition {
 }
 
 const MIN_DELTA_THRESHOLD = 0.001;
+const DEFAULT_LERP = 0.08;
 
-function useMouseParallax(lerp = 0.08): IMousePosition {
+function useMouseParallax(lerp = DEFAULT_LERP): IMousePosition {
   const [position, setPosition] = useState<IMousePosition>({ x: 0, y: 0 });
   const target = useRef<IMousePosition>({ x: 0, y: 0 });
   const current = useRef<IMousePosition>({ x: 0, y: 0 });
