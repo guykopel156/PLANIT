@@ -19,7 +19,7 @@ PLANIT/
 │   │   │   │   ├── HeroSection.tsx, AIChatSection.tsx, MapPreviewSection.tsx
 │   │   │   │   ├── TicketsSection.tsx, StatsSection.tsx, CtaSection.tsx
 │   │   │   │   ├── CursorSpotlight.tsx, FloatingShapes.tsx
-│   │   │   │   └── FlightTicket.tsx, MouseGlowCard.tsx, Reveal.tsx
+│   │   │   │   └── FlightTicket.tsx, MouseGlowCard.tsx, Reveal.tsx, SectionDivider.tsx
 │   │   │   └── hooks/      # Landing-page-specific hooks
 │   │   │       ├── useScrollProgress.ts, useScrollReveal.ts
 │   │   │       ├── useMagnetic.ts, useMouseParallax.ts
