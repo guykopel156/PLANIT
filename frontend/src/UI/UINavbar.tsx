@@ -34,13 +34,21 @@ function useNavbarHandlers(): {
       toast.success('Logged out successfully');
       navigate('/');
     },
-    handleToggleMobileMenu: (): void => setIsMobileMenuOpen((previous) => !previous),
+    handleToggleMobileMenu: (): void =>
+      setIsMobileMenuOpen((previous) => !previous),
   };
 }
 
 function UINavbar(): React.ReactElement {
   const auth = useAuth();
-  const { state, handleCloseMobileMenu, handleOpenAuth, handleCloseAuth, handleLogout, handleToggleMobileMenu } = useNavbarHandlers();
+  const {
+    state,
+    handleCloseMobileMenu,
+    handleOpenAuth,
+    handleCloseAuth,
+    handleLogout,
+    handleToggleMobileMenu,
+  } = useNavbarHandlers();
   const userName = auth.user?.name ?? '';
 
   return (

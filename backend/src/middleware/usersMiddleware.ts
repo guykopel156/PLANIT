@@ -1,15 +1,12 @@
-import { body, validationResult } from 'express-validator';
+import { body } from 'express-validator';
 
 import { NAME_MIN_LENGTH, NAME_MAX_LENGTH } from '../constants/validation';
 import { verifyAccessToken } from '../services/usersService';
+import { validateRequest } from './validateRequest';
 
 import type { Request, Response, NextFunction } from 'express';
 import type { ValidationChain } from 'express-validator';
 import type { AuthPayload } from '../types/user';
-
-const VALIDATION_ERROR_CODE = 'VALIDATION_ERROR';
-const VALIDATION_ERROR_MESSAGE = 'Invalid request data';
-const VALIDATION_STATUS_CODE = 400;
 
 const AUTH_ERROR_CODE = 'UNAUTHORIZED';
 const AUTH_ERROR_MESSAGE = 'Authentication required';
@@ -121,30 +118,8 @@ const updateProfileRules: ValidationChain[] = [
     .withMessage('Avatar must be a valid URL'),
 ];
 
-function validate(rules: ValidationChain[]): (req: Request, res: Response, next: NextFunction) => Promise<void> {
-  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    for (const rule of rules) {
-      await rule.run(req);
-    }
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(VALIDATION_STATUS_CODE).json({
-        error: {
-          code: VALIDATION_ERROR_CODE,
-          message: VALIDATION_ERROR_MESSAGE,
-          details: errors.array(),
-        },
-      });
-      return;
-    }
-
-    next();
-  };
-}
-
-const validateRegister = validate(registerRules);
-const validateLogin = validate(loginRules);
-const validateUpdateProfile = validate(updateProfileRules);
+const validateRegister = validateRequest(registerRules);
+const validateLogin = validateRequest(loginRules);
+const validateUpdateProfile = validateRequest(updateProfileRules);
 
 export { authenticate, validateRegister, validateLogin, validateUpdateProfile };

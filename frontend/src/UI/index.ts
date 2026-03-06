@@ -11,3 +11,8 @@ export { default as UIErrorBoundary } from './UIErrorBoundary';
 export { default as UIFooterLink } from './UIFooterLink';
 export { default as UITextButton } from './UITextButton';
 export { default as UITypography } from './UITypography';
+export { default as UIProgressBar } from './UIProgressBar';
+export { default as UISelect } from './UISelect';
+export { default as UIAvatar } from './UIAvatar';
+export { default as UIImageCarousel } from './UIImageCarousel';
+export { default as UIChipButton } from './UIChipButton';

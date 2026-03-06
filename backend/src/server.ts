@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 
 import env from './config/env';
 import routes from './routes/auth';
+import tripRoutes from './routes/trips';
 import logger from './utils/logger';
 import { AppError } from './utils/appError';
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api', routes);
+app.use('/api', tripRoutes);
 
 app.use((err: AppError, _req: Request, res: Response, _next: NextFunction): void => {
   const statusCode = err.statusCode || DEFAULT_STATUS_CODE;
