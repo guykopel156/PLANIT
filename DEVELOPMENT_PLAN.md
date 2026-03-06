@@ -59,6 +59,23 @@
 - [x] Add vitest + testing-library + supertest test infrastructure
 - [x] Create 21 passing tests (frontend + backend)
 
+### 1.5 — Frontend Restructure & UITypography
+- [x] Reorganize frontend into feature-first folder structure (features/app, features/auth, features/landingPage)
+- [x] Create authService.ts — extract createUser/loginUser from shared users.ts
+- [x] Create UITypography component with 12 variants (header, h1–h5, p, span, error/success)
+- [x] Create UIBox component to replace raw `<div>` elements
+- [x] Create UITextButton component for text-styled buttons
+- [x] Extract UINavbarParts from UINavbar (component splitting)
+- [x] Replace all raw HTML text elements with UITypography across 11+ files
+- [x] Replace raw divs with UIBox across landing page components
+- [x] Extract magic numbers to named constants in all 3D/animation files
+- [x] Add type guards replacing `as` assertions (AuthContext, backend services)
+- [x] Create backend async error handler middleware
+- [x] Create centralized env config (no direct process.env access)
+- [x] Split backend controller logic into services layer
+- [x] Fix all CLAUDE.md code quality rule violations
+- [x] Update CLAUDE.md project structure documentation
+
 ## Stage 2 — Itinerary Builder & My Trips
 
 <!-- Coming after Stage 1 -->
@@ -82,3 +99,4 @@
 | 2026-03-04 | Stage 1.2 — UI component library, dark/light theme, floating pill navbar | 1.2 |
 | 2026-03-05 | Stage 1.3 — Bold & playful homepage redesign: 3D airplane scene, 6 immersive sections, scroll-driven animations, feature folder reorganization, code quality audit fixes | 1.3 |
 | 2026-03-05 | Stage 1.4 — User registration hooks, CRUD services, validation middleware, logger, test infrastructure, dead code removal, CLAUDE.md rules enforcement | 1.4 |
+| 2026-03-06 | Stage 1.5 — Feature-first folder restructure, UITypography/UIBox/UITextButton components, backend async handler + env config + service layer, full CLAUDE.md rules compliance | 1.5 |

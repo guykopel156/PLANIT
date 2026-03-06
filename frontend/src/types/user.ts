@@ -1,4 +1,4 @@
-export interface IUser {
+export interface User {
   _id: string;
   name: string;
   email: string;
@@ -7,26 +7,20 @@ export interface IUser {
   updatedAt: string;
 }
 
-export interface ICreateUserRequest {
+export interface CreateUserRequest {
   name: string;
   email: string;
   password: string;
 }
 
-export interface ILoginRequest {
+export interface LoginRequest {
   email: string;
   password: string;
 }
 
-export interface IUpdateUserRequest {
+export interface UpdateUserRequest {
   name?: string;
   email?: string;
   password?: string;
   avatar?: string;
-}
-
-export interface IAuthResponse {
-  user: IUser;
-  accessToken: string;
-  refreshToken: string;
 }

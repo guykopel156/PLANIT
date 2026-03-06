@@ -1,0 +1,4 @@
+const NAME_MIN_LENGTH = 2;
+const NAME_MAX_LENGTH = 50;
+
+export { NAME_MIN_LENGTH, NAME_MAX_LENGTH };
