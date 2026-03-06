@@ -95,6 +95,17 @@
 - [x] Add auth-protected AppPage with Outlet routing
 - [x] Fix all CLAUDE.md rule violations (import grouping, `as` assertions, raw HTML elements, code duplication)
 
+### 1.7 — Trip CRUD Backend
+- [x] Create Trip types (TripDocument, TripCollaborator, CreateTripInput, UpdateTripInput, TripResponse, TripStatus, TransportMode, TripPace, AccommodationType, DietaryPreference)
+- [x] Create Trip Mongoose model with 40 fields, indexes, timestamps, toJSON transform
+- [x] Create trips service (CRUD + sanitize + ownership checks)
+- [x] Update trips controller with create, list, getById, update, remove handlers
+- [x] Update trips middleware with createTripRules, updateTripRules validation
+- [x] Update trips routes with 5 new CRUD endpoints (all auth-protected)
+- [x] Extract shared trip constants to `constants/trip.ts` (no duplication)
+- [x] Update API_DOCUMENTATION.md with full endpoint docs
+- [x] Zero TypeScript errors, CLAUDE.md rules compliant
+
 ## Stage 2 — Itinerary Builder & My Trips
 
 <!-- Coming after Stage 1 -->
@@ -120,3 +131,4 @@
 | 2026-03-05 | Stage 1.4 — User registration hooks, CRUD services, validation middleware, logger, test infrastructure, dead code removal, CLAUDE.md rules enforcement | 1.4 |
 | 2026-03-06 | Stage 1.5 — Feature-first folder restructure, UITypography/UIBox/UITextButton components, backend async handler + env config + service layer, full CLAUDE.md rules compliance | 1.5 |
 | 2026-03-06 | Stage 1.6 — Dashboard, trip planning form, AI itinerary generation, TripCard image carousel, 5 new UI components, backend trips API, CLAUDE.md rules fixes | 1.6 |
+| 2026-03-06 | Stage 1.7 — Trip CRUD backend: schema (40 fields), service, controller, middleware, routes, shared constants, API docs | 1.7 |
