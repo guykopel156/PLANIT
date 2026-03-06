@@ -94,9 +94,9 @@ function HeroContent({ mouse, fade, magneticRef, handleMouseMove, handleMouseLea
           AI-powered trips, interactive maps, all in one place.
         </UITypography>
 
-        <div
-          className="flex flex-col gap-4 sm:flex-row"
+        <UIBox
           ref={magneticRef}
+          className="flex flex-col gap-4 sm:flex-row"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           style={{ animation: `bounce-in 0.8s ${BOUNCE_IN_TIMING} 0.3s both` }}
@@ -107,7 +107,7 @@ function HeroContent({ mouse, fade, magneticRef, handleMouseMove, handleMouseLea
           <UISecondaryButton to="/explore" className="rounded-2xl px-10 py-5 text-lg font-bold dark:border-white/15 dark:text-white dark:hover:bg-white/10">
             Watch Demo
           </UISecondaryButton>
-        </div>
+        </UIBox>
       </UIBox>
     </UIBox>
   );

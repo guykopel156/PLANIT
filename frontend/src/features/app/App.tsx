@@ -9,6 +9,8 @@ import { AuthProvider } from '../../context/AuthContext';
 
 const Home = lazy(() => import('../landingPage/Home'));
 const AppPage = lazy(() => import('./pages/AppPage'));
+const Dashboard = lazy(() => import('../dashboard/Dashboard'));
+const TripPlanning = lazy(() => import('../tripPlanning/TripPlanning'));
 
 const queryClient = new QueryClient();
 
@@ -22,7 +24,10 @@ function App(): React.ReactElement {
             <Suspense fallback={<UIBox className="flex min-h-screen items-center justify-center" />}>
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/app" element={<AppPage />} />
+                <Route path="/app" element={<AppPage />}>
+                  <Route index element={<Dashboard />} />
+                  <Route path="plan" element={<TripPlanning />} />
+                </Route>
               </Routes>
             </Suspense>
           </UIErrorBoundary>

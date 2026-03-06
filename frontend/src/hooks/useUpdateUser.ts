@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query";
-import type { User, UpdateUserRequest } from "../types/user";
+
 import { updateUser } from "../services/users";
 import { USERS_KEY, userKey } from "./userKeys";
+
+import type { User, UpdateUserRequest } from "../types/user";
 
 interface UpdateUserVariables {
   id: string;

@@ -11,6 +11,7 @@ interface EnvConfig {
   CORS_ORIGIN: string;
   MONGODB_URI: string;
   JWT_SECRET: string;
+  ANTHROPIC_API_KEY: string;
 }
 
 const env: EnvConfig = {
@@ -18,6 +19,7 @@ const env: EnvConfig = {
   CORS_ORIGIN: process.env.CORS_ORIGIN || DEFAULT_CORS_ORIGIN,
   MONGODB_URI: process.env.MONGODB_URI || '',
   JWT_SECRET: process.env.JWT_SECRET || '',
+  ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY || '',
 };
 
 export default env;

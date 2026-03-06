@@ -76,6 +76,25 @@
 - [x] Fix all CLAUDE.md code quality rule violations
 - [x] Update CLAUDE.md project structure documentation
 
+### 1.6 — Dashboard, Trip Planning & Image Carousel
+- [x] Create Dashboard feature (Dashboard, DashboardHeader, DashboardEmptyState, TripCard)
+- [x] Create Trip Planning feature (TripPlanning, TripPlanningForm, TripFormStepper, TripFormStepOne/Two/Three)
+- [x] Create ItineraryView and ItineraryDayCard for AI-generated itinerary display
+- [x] Add Trip types (Trip, TripPreferences, GeneratedItinerary, ItineraryDay, ItineraryActivity)
+- [x] Create UIProgressBar, UISelect, UIAvatar, UIImageCarousel, UIChipButton components
+- [x] Add TripCard image carousel with auto-rotation, dot indicators, hover pause, gradient fallback
+- [x] Add mock trip data with Unsplash city images (Tokyo, Paris, Bali, NYC)
+- [x] Add UIBox forwardRef support with mouse event props
+- [x] Create backend trips route, controller, middleware, and AI itinerary service
+- [x] Create shared validateRequest middleware (deduplicate from users/trips)
+- [x] Add Anthropic Claude AI integration for itinerary generation
+- [x] Add trip form validation utilities and constants
+- [x] Add useCountdown hook for trip card countdown badges
+- [x] Add useGenerateItinerary hook with React Query mutation
+- [x] Configure lazy-loaded routes for Dashboard and TripPlanning pages
+- [x] Add auth-protected AppPage with Outlet routing
+- [x] Fix all CLAUDE.md rule violations (import grouping, `as` assertions, raw HTML elements, code duplication)
+
 ## Stage 2 — Itinerary Builder & My Trips
 
 <!-- Coming after Stage 1 -->
@@ -100,3 +119,4 @@
 | 2026-03-05 | Stage 1.3 — Bold & playful homepage redesign: 3D airplane scene, 6 immersive sections, scroll-driven animations, feature folder reorganization, code quality audit fixes | 1.3 |
 | 2026-03-05 | Stage 1.4 — User registration hooks, CRUD services, validation middleware, logger, test infrastructure, dead code removal, CLAUDE.md rules enforcement | 1.4 |
 | 2026-03-06 | Stage 1.5 — Feature-first folder restructure, UITypography/UIBox/UITextButton components, backend async handler + env config + service layer, full CLAUDE.md rules compliance | 1.5 |
+| 2026-03-06 | Stage 1.6 — Dashboard, trip planning form, AI itinerary generation, TripCard image carousel, 5 new UI components, backend trips API, CLAUDE.md rules fixes | 1.6 |

@@ -51,7 +51,7 @@ function CtaButtons(): React.ReactElement {
 
   return (
     <UIBox className="flex flex-col items-center justify-center gap-5 sm:flex-row">
-      <div
+      <UIBox
         ref={magneticPrimary.ref}
         onMouseMove={magneticPrimary.handleMouseMove}
         onMouseLeave={magneticPrimary.handleMouseLeave}
@@ -61,8 +61,8 @@ function CtaButtons(): React.ReactElement {
         <UIPrimaryButton to="/trips" className="relative rounded-2xl px-12 py-5 text-lg font-bold shadow-xl shadow-blue-500/25 transition-all hover:shadow-2xl hover:shadow-blue-500/40 dark:shadow-cyan-500/15">
           Start Planning Free
         </UIPrimaryButton>
-      </div>
-      <div
+      </UIBox>
+      <UIBox
         ref={magneticSecondary.ref}
         onMouseMove={magneticSecondary.handleMouseMove}
         onMouseLeave={magneticSecondary.handleMouseLeave}
@@ -71,7 +71,7 @@ function CtaButtons(): React.ReactElement {
         <UISecondaryButton to="/explore" className="rounded-2xl px-12 py-5 text-lg font-bold dark:border-white/15 dark:text-white dark:hover:bg-white/10">
           Watch Demo
         </UISecondaryButton>
-      </div>
+      </UIBox>
     </UIBox>
   );
 }
