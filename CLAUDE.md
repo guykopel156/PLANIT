@@ -11,24 +11,28 @@ PLANIT is an all-in-one trip planning platform. Web + iOS + Android.
 PLANIT/
 ├── frontend/            # React 18 + TypeScript frontend
 │   ├── src/
-│   │   ├── App/             # App shell (App.tsx, router setup)
-│   │   ├── LandingPage/     # Landing page feature module
-│   │   │   ├── Home.tsx     # Landing page entry component
-│   │   │   ├── components/  # Landing page sections & visuals
-│   │   │   │   ├── hero3d/  # 3D scene (Airplane, Cloud, Particles, FlightPath)
-│   │   │   │   ├── HeroSection.tsx, AIChatSection.tsx, MapPreviewSection.tsx
-│   │   │   │   ├── TicketsSection.tsx, StatsSection.tsx, CtaSection.tsx
-│   │   │   │   ├── CursorSpotlight.tsx, FloatingShapes.tsx
-│   │   │   │   └── FlightTicket.tsx, MouseGlowCard.tsx, Reveal.tsx, SectionDivider.tsx
-│   │   │   └── hooks/      # Landing-page-specific hooks
-│   │   │       ├── useScrollProgress.ts, useScrollReveal.ts
-│   │   │       ├── useMagnetic.ts, useMouseParallax.ts
-│   │   ├── UI/              # Shared UI components (UIPrimaryButton, UINavbar, etc.)
-│   │   ├── context/         # React context providers (ThemeContext)
-│   │   ├── hooks/           # Shared/global hooks
-│   │   ├── services/        # API call functions
+│   │   ├── features/        # Feature-first modules (colocated)
+│   │   │   ├── app/         # App shell (App.tsx, router setup)
+│   │   │   │   └── pages/   # App-level pages (AppPage.tsx)
+│   │   │   ├── auth/        # Authentication feature
+│   │   │   │   ├── AuthDialog.tsx
+│   │   │   │   ├── components/  # Auth sub-components (AuthForms)
+│   │   │   │   ├── hooks/       # useCreateUser, useLoginUser
+│   │   │   │   ├── services/    # authService (createUser, loginUser)
+│   │   │   │   └── utils/       # authValidation
+│   │   │   └── landingPage/ # Landing page feature
+│   │   │       ├── Home.tsx
+│   │   │       ├── components/  # Sections & visuals
+│   │   │       │   ├── hero3d/  # 3D scene (Airplane, Cloud, Particles, FlightPath)
+│   │   │       │   ├── HeroSection, AIChatSection, MapPreviewSection
+│   │   │       │   ├── TicketsSection, StatsSection, CtaSection
+│   │   │       │   └── FlightTicket, MouseGlowCard, Reveal, SectionDivider
+│   │   │       └── hooks/      # useScrollProgress, useScrollReveal, etc.
+│   │   ├── UI/              # Shared UI components (UITypography, UIBox, UINavbar, etc.)
+│   │   ├── context/         # React context providers (AuthContext, ThemeContext)
+│   │   ├── hooks/           # Shared hooks (useGetUser, useUpdateUser, etc.)
+│   │   ├── services/        # Shared API services (api.ts, users.ts CRUD)
 │   │   ├── types/           # TypeScript interfaces & types
-│   │   ├── utils/           # Helper functions
 │   │   ├── assets/          # Static assets (images, icons)
 │   │   ├── main.tsx         # Entry point
 │   │   └── index.css        # Global styles & keyframes
@@ -38,10 +42,11 @@ PLANIT/
 │   │   ├── routes/      # Express route definitions
 │   │   ├── controllers/ # Request handlers
 │   │   ├── models/      # Mongoose schemas
-│   │   ├── middleware/   # Auth, validation, error handling
-│   │   ├── services/    # Business logic (AI, Google APIs)
+│   │   ├── middleware/   # Auth, validation, error handling, asyncHandler
+│   │   ├── services/    # Business logic (AI, Google APIs, usersService)
 │   │   ├── types/       # TypeScript interfaces & types
-│   │   ├── utils/       # Helper functions
+│   │   ├── utils/       # Helper functions (appError, logger)
+│   │   ├── constants/   # Shared constants (validation)
 │   │   └── config/      # DB connection, env config
 │   └── ...
 ├── PRD.md               # Product Requirements Document
