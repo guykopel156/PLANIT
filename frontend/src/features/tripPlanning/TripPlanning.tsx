@@ -1,54 +1,62 @@
-import { UIBox, UITypography } from '../../UI';
-import { useGenerateItinerary } from './hooks/useGenerateItinerary';
-import TripPlanningForm from './components/TripPlanningForm';
+import { useEffect, useRef } from 'react';
+
+import { UIBox } from '../../UI';
+import { useCreateTrip } from '../../hooks/useCreateTrip';
+import { useChatStream } from './hooks/useChatStream';
+import ChatHeader from './components/ChatHeader';
+import ChatMessageList from './components/ChatMessageList';
+import ChatInput from './components/ChatInput';
+import ChatError from './components/ChatError';
 import ItineraryView from './components/ItineraryView';
 
-import type { TripPreferences } from '../../types/trip';
+import type { CreateTripInput, GeneratedItinerary } from '../../types/trip';
 
 function TripPlanning(): React.ReactElement {
-  const { mutate, data: itinerary, isPending, isError, error, reset } = useGenerateItinerary();
+  const { messages, isStreaming, itinerary, preferences, error, handleSendMessage, handleReset } = useChatStream();
+  const { mutate: createTripMutate } = useCreateTrip();
+  const hasSavedRef = useRef(false);
 
-  function handleSubmit(preferences: TripPreferences): void {
-    mutate(preferences);
-  }
+  useEffect(() => {
+    if (itinerary && preferences && !hasSavedRef.current) {
+      hasSavedRef.current = true;
 
-  function handleReset(): void {
-    reset();
+      const tripInput: CreateTripInput = {
+        name: `${String(preferences.destination ?? 'My')} Trip`,
+        destination: String(preferences.destination ?? ''),
+        startDate: String(preferences.startDate ?? ''),
+        endDate: String(preferences.endDate ?? ''),
+        budgetMin: Number(preferences.budgetMin ?? 0),
+        budgetMax: Number(preferences.budgetMax ?? 0),
+        travelStyle: preferences.travelStyle as CreateTripInput['travelStyle'],
+        travelerCount: Number(preferences.travelerCount ?? 1),
+        interests: (preferences.interests as string[]) ?? [],
+        itinerary: itinerary as GeneratedItinerary,
+        status: 'planning',
+      };
+
+      createTripMutate(tripInput);
+    }
+  }, [itinerary, preferences, createTripMutate]);
+
+  function handleResetAll(): void {
+    hasSavedRef.current = false;
+    handleReset();
   }
 
   if (itinerary) {
     return (
       <UIBox className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <ItineraryView itinerary={itinerary} onReset={handleReset} />
+        <ItineraryView itinerary={itinerary} onReset={handleResetAll} />
       </UIBox>
     );
   }
 
   return (
-    <UIBox className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      {isPending && (
-        <UIBox className="mb-8 flex flex-col items-center justify-center py-16">
-          <UIBox className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
-          <UITypography variant="h3" className="text-gray-900 dark:text-white">
-            Generating your itinerary...
-          </UITypography>
-          <UITypography variant="p" className="mt-2 text-gray-500 dark:text-gray-400">
-            Our AI is crafting the perfect trip for you. This may take a moment.
-          </UITypography>
-        </UIBox>
-      )}
-
-      {isError && (
-        <UIBox className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/30">
-          <UITypography variant="errorText">
-            {error?.message ?? 'Something went wrong. Please try again.'}
-          </UITypography>
-        </UIBox>
-      )}
-
-      {!isPending && (
-        <TripPlanningForm onSubmit={handleSubmit} isSubmitting={isPending} />
-      )}
+    <UIBox className="flex h-[calc(100dvh-4rem)] flex-col bg-white dark:bg-gray-900">
+      <ChatHeader />
+      {error && <ChatError message={error} />}
+      <ChatMessageList messages={messages} isStreaming={isStreaming} />
+      <ChatInput onSend={handleSendMessage} isDisabled={isStreaming} />
     </UIBox>
   );
 }

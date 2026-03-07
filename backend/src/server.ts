@@ -17,7 +17,11 @@ const DEFAULT_ERROR_MESSAGE = 'Internal server error';
 
 const app = express();
 
-app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
+app.use(cors({
+  origin: env.CORS_ORIGIN,
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 app.use(cookieParser());
 

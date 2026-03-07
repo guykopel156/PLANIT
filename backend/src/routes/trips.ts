@@ -1,11 +1,12 @@
 import { Router } from 'express';
 
-import { generate, create, list, getById, update, remove } from '../controllers/tripsController';
+import { generate, create, list, getById, update, remove, chat } from '../controllers/tripsController';
 import { authenticate } from '../middleware/usersMiddleware';
-import { validateGenerateItinerary, validateCreateTrip, validateUpdateTrip } from '../middleware/tripsMiddleware';
+import { validateGenerateItinerary, validateCreateTrip, validateUpdateTrip, validateChat } from '../middleware/tripsMiddleware';
 
 const router = Router();
 
+router.post('/trips/chat', authenticate, validateChat, chat);
 router.post('/trips/generate', authenticate, validateGenerateItinerary, generate);
 router.post('/trips', authenticate, validateCreateTrip, create);
 router.get('/trips', authenticate, list);

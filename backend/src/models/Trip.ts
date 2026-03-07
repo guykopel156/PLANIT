@@ -60,6 +60,16 @@ const tripSchema = new Schema<TripDocument>(
       trim: true,
       default: '',
     },
+    departureAirport: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    arrivalAirport: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     cities: {
       type: [String],
       default: [],

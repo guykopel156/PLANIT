@@ -1,10 +1,13 @@
 import { asyncHandler } from '../middleware/asyncHandler';
 import { generateItinerary } from '../services/ai/itineraryService';
+import { createChatStream } from '../services/ai/chatService';
 import { createTrip, getTripsByUserId, getTripById, updateTrip, deleteTrip } from '../services/tripsService';
 import { AppError, HTTP_UNAUTHORIZED } from '../utils/appError';
+import logger from '../utils/logger';
 
 import type { Request, Response } from 'express';
 import type { CreateTripInput, UpdateTripInput, TripPreferences } from '../types/trip';
+import type { ChatMessage } from '../types/chat';
 
 const STATUS_OK = 200;
 const STATUS_CREATED = 201;
@@ -44,6 +47,8 @@ const create = asyncHandler(async (req: Request, res: Response): Promise<void> =
     startDate: req.body.startDate,
     endDate: req.body.endDate,
     origin: req.body.origin,
+    departureAirport: req.body.departureAirport,
+    arrivalAirport: req.body.arrivalAirport,
     cities: req.body.cities,
     dailyStartHour: req.body.dailyStartHour,
     dailyEndHour: req.body.dailyEndHour,
@@ -70,6 +75,7 @@ const create = asyncHandler(async (req: Request, res: Response): Promise<void> =
     tags: req.body.tags,
     notes: req.body.notes,
     language: req.body.language,
+    itinerary: req.body.itinerary,
   };
 
   const trip = await createTrip(userId, input);
@@ -97,6 +103,8 @@ const update = asyncHandler(async (req: Request, res: Response): Promise<void> =
   if (req.body.name !== undefined) updates.name = req.body.name;
   if (req.body.destination !== undefined) updates.destination = req.body.destination;
   if (req.body.origin !== undefined) updates.origin = req.body.origin;
+  if (req.body.departureAirport !== undefined) updates.departureAirport = req.body.departureAirport;
+  if (req.body.arrivalAirport !== undefined) updates.arrivalAirport = req.body.arrivalAirport;
   if (req.body.cities !== undefined) updates.cities = req.body.cities;
   if (req.body.startDate !== undefined) updates.startDate = req.body.startDate;
   if (req.body.endDate !== undefined) updates.endDate = req.body.endDate;
@@ -142,4 +150,31 @@ const remove = asyncHandler(async (req: Request, res: Response): Promise<void> =
   res.status(STATUS_NO_CONTENT).send();
 });
 
-export { generate, create, list, getById, update, remove };
+const HTTP_INTERNAL_ERROR = 500;
+const CHAT_ERROR_CODE = 'CHAT_STREAM_FAILED';
+
+async function chat(req: Request, res: Response): Promise<void> {
+  try {
+    const userId = getAuthenticatedUserId(req);
+    const messages = req.body.messages as ChatMessage[];
+
+    logger.info('Chat stream started', { userId, messageCount: messages.length });
+
+    await createChatStream(messages, res);
+  } catch (error: unknown) {
+    if (!res.headersSent) {
+      const message = error instanceof AppError ? error.message : 'Chat stream failed';
+      const statusCode = error instanceof AppError ? error.statusCode : HTTP_INTERNAL_ERROR;
+      const code = error instanceof AppError ? error.code : CHAT_ERROR_CODE;
+
+      res.status(statusCode).json({
+        error: { code, message, details: [] },
+      });
+    }
+
+    const detail = error instanceof Error ? error.message : String(error);
+    logger.error('Chat handler error', { detail });
+  }
+}
+
+export { generate, create, list, getById, update, remove, chat };

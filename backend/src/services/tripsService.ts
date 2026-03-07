@@ -20,6 +20,8 @@ function sanitizeTrip(trip: {
   name: string;
   destination: string;
   origin: string;
+  departureAirport: string;
+  arrivalAirport: string;
   cities: string[];
   startDate: Date;
   endDate: Date;
@@ -62,6 +64,8 @@ function sanitizeTrip(trip: {
     name: trip.name,
     destination: trip.destination,
     origin: trip.origin,
+    departureAirport: trip.departureAirport,
+    arrivalAirport: trip.arrivalAirport,
     cities: trip.cities,
     startDate: trip.startDate,
     endDate: trip.endDate,
@@ -108,6 +112,8 @@ async function createTrip(userId: string, input: CreateTripInput): Promise<TripR
     startDate: input.startDate,
     endDate: input.endDate,
     origin: input.origin,
+    departureAirport: input.departureAirport,
+    arrivalAirport: input.arrivalAirport,
     cities: input.cities,
     dailyStartHour: input.dailyStartHour,
     dailyEndHour: input.dailyEndHour,
@@ -134,6 +140,7 @@ async function createTrip(userId: string, input: CreateTripInput): Promise<TripR
     tags: input.tags,
     notes: input.notes,
     language: input.language,
+    itinerary: input.itinerary,
   });
 
   return sanitizeTrip(trip);

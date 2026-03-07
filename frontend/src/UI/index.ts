@@ -16,3 +16,4 @@ export { default as UISelect } from './UISelect';
 export { default as UIAvatar } from './UIAvatar';
 export { default as UIImageCarousel } from './UIImageCarousel';
 export { default as UIChipButton } from './UIChipButton';
+export { default as UITextarea } from './UITextarea';
