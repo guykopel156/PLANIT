@@ -52,7 +52,7 @@ function TripCard({ trip }: ITripCardProps): React.ReactElement {
           <UIBox className="flex -space-x-2">
             {visibleCollaborators.map((collaborator) => (
               <UIAvatar
-                key={collaborator.id}
+                key={collaborator.userId}
                 name={collaborator.name}
                 imageUrl={collaborator.avatar}
                 size="sm"

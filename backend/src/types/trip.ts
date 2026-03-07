@@ -21,6 +21,8 @@ export interface TripDocument extends Document {
   name: string;
   destination: string;
   origin: string;
+  departureAirport: string;
+  arrivalAirport: string;
   cities: string[];
   startDate: Date;
   endDate: Date;
@@ -64,6 +66,8 @@ export interface CreateTripInput {
   startDate: string;
   endDate: string;
   origin?: string;
+  departureAirport?: string;
+  arrivalAirport?: string;
   cities?: string[];
   dailyStartHour?: string;
   dailyEndHour?: string;
@@ -90,12 +94,15 @@ export interface CreateTripInput {
   tags?: string[];
   notes?: string;
   language?: string;
+  itinerary?: GeneratedItinerary;
 }
 
 export interface UpdateTripInput {
   name?: string;
   destination?: string;
   origin?: string;
+  departureAirport?: string;
+  arrivalAirport?: string;
   cities?: string[];
   startDate?: string;
   endDate?: string;
@@ -137,6 +144,8 @@ export interface TripResponse {
   name: string;
   destination: string;
   origin: string;
+  departureAirport: string;
+  arrivalAirport: string;
   cities: string[];
   startDate: Date;
   endDate: Date;

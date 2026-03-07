@@ -83,6 +83,16 @@ const createTripRules: ValidationChain[] = [
     .trim()
     .notEmpty()
     .withMessage('Origin cannot be empty'),
+  body('departureAirport')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('Departure airport cannot be empty'),
+  body('arrivalAirport')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('Arrival airport cannot be empty'),
   body('cities')
     .optional()
     .isArray()
@@ -207,6 +217,16 @@ const updateTripRules: ValidationChain[] = [
     .trim()
     .isString()
     .withMessage('Origin must be a string'),
+  body('departureAirport')
+    .optional()
+    .trim()
+    .isString()
+    .withMessage('Departure airport must be a string'),
+  body('arrivalAirport')
+    .optional()
+    .trim()
+    .isString()
+    .withMessage('Arrival airport must be a string'),
   body('cities')
     .optional()
     .isArray()
@@ -355,8 +375,25 @@ const updateTripRules: ValidationChain[] = [
     .withMessage(`Completion percentage must be between ${MIN_COMPLETION} and ${MAX_COMPLETION}`),
 ];
 
+const MAX_CHAT_MESSAGES = 50;
+const MIN_CHAT_MESSAGES = 1;
+
+const chatRules: ValidationChain[] = [
+  body('messages')
+    .isArray({ min: MIN_CHAT_MESSAGES, max: MAX_CHAT_MESSAGES })
+    .withMessage(`Messages must be an array with ${MIN_CHAT_MESSAGES}-${MAX_CHAT_MESSAGES} items`),
+  body('messages.*.role')
+    .isIn(['user', 'assistant'])
+    .withMessage('Each message role must be "user" or "assistant"'),
+  body('messages.*.content')
+    .isString()
+    .notEmpty()
+    .withMessage('Each message must have non-empty content'),
+];
+
 const validateGenerateItinerary = validateRequest(generateItineraryRules);
 const validateCreateTrip = validateRequest(createTripRules);
 const validateUpdateTrip = validateRequest(updateTripRules);
+const validateChat = validateRequest(chatRules);
 
-export { validateGenerateItinerary, validateCreateTrip, validateUpdateTrip };
+export { validateGenerateItinerary, validateCreateTrip, validateUpdateTrip, validateChat };

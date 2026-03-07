@@ -8,7 +8,7 @@ import logger from '../../utils/logger';
 import type { ContentBlock } from '@anthropic-ai/sdk/resources/messages';
 import type { TripPreferences, GeneratedItinerary } from '../../types/trip';
 
-const MODEL_ID = 'claude-sonnet-4-5-20241022';
+const MODEL_ID = 'claude-sonnet-4-20250514';
 const MAX_TOKENS = 4096;
 const HTTP_INTERNAL_ERROR = 500;
 const AI_ERROR_CODE = 'AI_GENERATION_FAILED';
